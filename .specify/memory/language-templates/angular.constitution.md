@@ -81,6 +81,7 @@ For variables, functions, lifescycle methods, etc. Follow the arrangement below
 
 ### Styling
 
+- Always consider responsiveness. It should look good on all screens be it a pc, tablet, or mobile
 - All colors and constants should be defined on `src/assets/styles/variables.scss`
 - All shared mixins should be defined on `src/assets/styles/mixins.scss`
 - All global styles should be defined on `src/assets/styles/global.scss`
