@@ -1,0 +1,46 @@
+// ─── Brand Colors ────────────────────────────────────────────────────────────
+$color-primary:        #1976d2;
+$color-primary-light:  #d0e4ff;
+$color-primary-bg:     #f5f9ff;
+
+$color-success:        #2e7d32;
+$color-warning:        #f57c00;
+$color-danger:         #c62828;
+
+// ─── Neutral Colors ───────────────────────────────────────────────────────────
+$color-white:          #ffffff;
+$color-text:           #333333;
+$color-text-muted:     #666666;
+$color-text-subtle:    #555555;
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+$toolbar-height:       60px;
+$toolbar-offset:       76px;   // toolbar-height + content margin-top gap
+$content-padding:      24px;
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+$spacing-xs:           4px;
+$spacing-sm:           8px;
+$spacing-md:           16px;
+$spacing-lg:           24px;
+$spacing-xl:           48px;
+
+// ─── Border Radius ────────────────────────────────────────────────────────────
+$radius-sm:            4px;
+$radius-md:            8px;
+$radius-lg:            12px;
+$radius-pill:          20px;
+
+// ─── Transitions ──────────────────────────────────────────────────────────────
+$transition-fast:      0.2s ease;
+$transition-normal:    0.3s ease;
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font-family-base:     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                       Helvetica, Arial, sans-serif;
+$font-size-base:       14px;
+$font-size-sm:         12px;
+$font-size-md:         16px;
+$font-size-lg:         18px;
+$font-size-xl:         24px;
+$font-size-hero:       48px;

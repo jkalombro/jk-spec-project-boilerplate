@@ -1,0 +1,46 @@
+<div class="about">
+  <div class="about__header">
+    <span class="about__icon">🧭</span>
+    <h1>About This App</h1>
+    <p>A sample Angular boilerplate built with structure, speed, and scalability in mind.</p>
+  </div>
+
+  <div class="about__timeline">
+    <app-timeline-item
+      emoji="🎯"
+      title="Mission"
+      desc="Provide a clean, opinionated starting point for Angular projects — no clutter, just patterns that scale."
+    ></app-timeline-item>
+    <app-timeline-item
+      emoji="🏗️"
+      title="Architecture"
+      desc="Feature modules with lazy loading, NgRx for state, and SCSS for styling. Every layer has a clear responsibility."
+    ></app-timeline-item>
+    <app-timeline-item
+      emoji="🧪"
+      title="Quality"
+      desc="TDD-first approach. Every component ships with specs targeting 100% coverage from day one."
+    ></app-timeline-item>
+  </div>
+
+  <div class="about__team">
+    <h2>Meet the Team</h2>
+
+    <div class="team-loading" *ngIf="loading$ | async">
+      <div class="team-skeleton" *ngFor="let i of [1, 2, 3]"></div>
+    </div>
+
+    <div class="team-grid" *ngIf="!(loading$ | async)">
+      <app-team-card
+        *ngFor="let member of team$ | async"
+        [member]="member"
+      ></app-team-card>
+    </div>
+  </div>
+
+  <div class="about__stack">
+    <app-tech-stack
+      [technologies]="['Angular', 'TypeScript', 'NgRx', 'SCSS', 'Karma']"
+    ></app-tech-stack>
+  </div>
+</div>

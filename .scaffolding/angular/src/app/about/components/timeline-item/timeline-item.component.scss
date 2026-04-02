@@ -1,0 +1,36 @@
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #1976d2;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #1976d2;
+  }
+
+  .timeline-item__emoji {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
+  .timeline-item__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1976d2;
+    margin: 0 0 4px;
+  }
+
+  .timeline-item__desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+  }
+}

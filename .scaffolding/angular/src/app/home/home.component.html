@@ -1,0 +1,20 @@
+<section class="hero">
+  <app-hero-header
+    icon="🏠"
+    title="Welcome Home"
+    subtitle="Your starting point for everything. Explore, build, and make it yours."
+  ></app-hero-header>
+
+  <div class="hero__stats" *ngIf="loading$ | async">
+    <div class="stat-skeleton" *ngFor="let i of [1, 2, 3]"></div>
+  </div>
+
+  <div class="hero__cards" *ngIf="!(loading$ | async)">
+    <app-stat-card
+      *ngFor="let stat of stats$ | async"
+      [icon]="stat.icon"
+      [value]="stat.value"
+      [label]="stat.label"
+    ></app-stat-card>
+  </div>
+</section>

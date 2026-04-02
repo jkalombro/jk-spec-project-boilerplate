@@ -1,0 +1,20 @@
+<div class="toolbar">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="40" height="40" />
+  <span class="spacer"></span>
+  <nav>
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+  </nav>
+
+  <div class="toolbar-user" *ngIf="user$ | async as user">
+    <span class="user-name">{{ user.name }}</span>
+  </div>
+
+  <div class="notification-badge" *ngIf="(notifications$ | async)?.length as count">
+    <span class="badge">{{ count }}</span>
+  </div>
+</div>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

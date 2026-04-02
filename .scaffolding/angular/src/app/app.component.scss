@@ -1,0 +1,79 @@
+@use 'src/assets/styles/variables' as *;
+
+:host {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $color-text;
+  box-sizing: border-box;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $toolbar-height;
+  display: flex;
+  align-items: center;
+  padding: 0 $content-padding;
+  background-color: $color-primary;
+  color: $color-white;
+  font-weight: 600;
+  z-index: 100;
+
+  img {
+    margin-right: $spacing-md;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.toolbar-user {
+  margin-left: $spacing-lg;
+  font-size: $font-size-sm;
+  opacity: 0.9;
+
+  .user-name {
+    font-weight: 600;
+  }
+}
+
+.notification-badge {
+  margin-left: $spacing-md;
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 $spacing-xs;
+    border-radius: 10px;
+    background-color: $color-danger;
+    color: $color-white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+nav a {
+  color: $color-white;
+  text-decoration: none;
+  margin-left: $spacing-lg;
+  font-size: $font-size-base;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: opacity $transition-fast;
+
+  &:hover,
+  &.active {
+    opacity: 1;
+  }
+}
+
+.content {
+  margin-top: $toolbar-offset;
+  padding: $content-padding;
+}

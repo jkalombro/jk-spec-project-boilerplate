@@ -1,0 +1,34 @@
+.card {
+  background: #f5f9ff;
+  border: 1px solid #d0e4ff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  width: 180px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(25, 118, 210, 0.15);
+  }
+
+  .card__emoji {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .card__value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1976d2;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .card__label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1976d2;
+  }
+}

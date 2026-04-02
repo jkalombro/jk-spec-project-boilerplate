@@ -103,6 +103,50 @@ Conflict: API/<APP_NAME> already exists. Choose a different app name or remove t
 
 ### Step 3 — Scaffold the Project
 
+#### Step 3.0 — Check for Scaffolding Template
+
+Before running any scaffold command, check whether `.scaffolding/<FRAMEWORK>/` exists at the repo root.
+
+**If `.scaffolding/<FRAMEWORK>/` EXISTS (template found):**
+
+1. Compute `APP_TITLE` from `APP_NAME` by splitting on `-`, capitalizing each part, then joining:
+   - e.g., `my-api` → `MyApi`, `sample-service` → `SampleService`
+
+2. Determine the target directory:
+   - **Case A:** target is `API/`
+   - **Cases B/C:** target is `API/<APP_NAME>/`
+
+3. Copy all files from `.scaffolding/<FRAMEWORK>/` into the target directory:
+   ```bash
+   cp -r .scaffolding/<FRAMEWORK>/. <TARGET>/
+   ```
+
+4. Replace placeholder tokens in every copied file:
+   ```bash
+   # Replace __APP_NAME__ and __APP_TITLE__ recursively in all text files
+   find <TARGET> -type f | xargs sed -i 's/__APP_NAME__/<APP_NAME>/g; s/__APP_TITLE__/<APP_TITLE>/g'
+   ```
+   On Windows (PowerShell), use:
+   ```powershell
+   Get-ChildItem -Path <TARGET> -Recurse -File | ForEach-Object {
+     (Get-Content $_.FullName -Raw) -replace '__APP_NAME__', '<APP_NAME>' -replace '__APP_TITLE__', '<APP_TITLE>' | Set-Content $_.FullName
+   }
+   ```
+
+5. Run the appropriate install command for the framework (e.g., `npm install`, `dotnet restore`, `pip install -r requirements.txt`) in the target directory.
+
+6. Note in the summary that a scaffolding template was used instead of the CLI scaffold command.
+
+7. **Jump to Step 4** — skip the rest of Step 3.
+
+---
+
+**If `.scaffolding/<FRAMEWORK>/` DOES NOT EXIST (no template):**
+
+Proceed with the standard scaffold command below.
+
+---
+
 Determine the scaffold command from `FRAMEWORK`:
 
 | Framework | Scaffold Command |

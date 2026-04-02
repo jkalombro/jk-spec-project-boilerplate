@@ -1,0 +1,85 @@
+.about {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+
+  .about__header {
+    text-align: center;
+    margin-bottom: 48px;
+
+    .about__icon {
+      font-size: 72px;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 700;
+      color: #1976d2;
+      margin: 0 0 12px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+    }
+  }
+
+  .about__timeline {
+    position: relative;
+    padding-left: 32px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #d0e4ff;
+    }
+  }
+
+  .about__team {
+    margin-top: 48px;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  }
+
+  .team-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .team-skeleton {
+    height: 80px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #e8f0fe 25%, #d0e4ff 50%, #e8f0fe 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+  }
+
+  .team-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about__stack {
+    margin-top: 48px;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
