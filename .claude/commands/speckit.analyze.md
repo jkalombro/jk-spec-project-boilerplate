@@ -62,7 +62,7 @@ Load only the minimal necessary context from each artifact:
 
 **From constitution:**
 
-- Load `.specify/memory/constitution.md` for principle validation
+- Load `.specify/memory/constitution.md` (gateway index), then read each referenced language-specific constitution file listed in it. Use the combined content of all referenced constitutions for principle validation.
 
 ### 3. Build Semantic Models
 

@@ -39,29 +39,17 @@ Parse `FRAMEWORK` and `APP_NAME` from `$ARGUMENTS` (first and second whitespace-
 
 **Branch A — Template EXISTS:**
 
-   a. Read `.specify/memory/constitution.md` and scan for a line matching the pattern `## UI Constitution — ` (case-insensitive match on the framework name that follows). If a matching section is already present:
-      - Inform the user: "A `## UI Constitution — <Framework>` section already exists in `constitution.md`. Skipping append. Run `/speckit.constitution` to update it."
+   a. Read `.specify/memory/constitution.md` (the gateway index) and scan for an existing reference to `language-templates/<FRAMEWORK>.constitution.md`. If a matching link is already present:
+      - Inform the user: "Constitution reference for `<Framework>` already exists in `constitution.md`. Skipping registration. Run `/speckit.constitution` to update it."
       - Proceed to Step 2.
 
-   b. Read `.specify/memory/language-templates/<FRAMEWORK>.constitution.md`. Strip the first line if it begins with `# This contains` (it is a file-level comment that becomes noise inside `constitution.md`).
+   b. Scan `.specify/memory/language-templates/<FRAMEWORK>.constitution.md` for any remaining tokens matching `[ALL_CAPS_IDENTIFIER]`. If any are found, emit a prominent warning:
 
-   c. Append the following block to the end of `.specify/memory/constitution.md` (after a blank line):
+      > **⚠ Warning:** The constitution file for `<Framework>` still contains unfilled placeholder tokens (e.g., `[PRINCIPLE_1_NAME]`). Run `/speckit.constitution` to fill them in before planning features.
 
-      ```markdown
-
-      ---
-
-      ## UI Constitution — <Framework>
-      <!-- Sourced from .specify/memory/language-templates/<framework>.constitution.md on <today's date YYYY-MM-DD> -->
-
-      <stripped template content verbatim>
-      ```
-
+   c. Register the framework in the gateway index. Under the `## UI` section in `.specify/memory/constitution.md` (add the section if it does not exist), append:
+      `- [<Framework>](./language-templates/<framework>.constitution.md)`
       Where `<Framework>` is title-cased (e.g., `angular` → `Angular`, `react` → `React`).
-
-   d. After appending, scan the newly added content for any remaining tokens matching the pattern `[ALL_CAPS_IDENTIFIER]` (bracket-wrapped uppercase identifiers). If any are found, emit a prominent warning:
-
-      > **⚠ Warning:** The UI Constitution section for `<Framework>` still contains unfilled placeholder tokens (e.g., `[PRINCIPLE_1_NAME]`). Run `/speckit.constitution` to fill them in before planning features.
 
 **Branch B — Template DOES NOT EXIST:**
 
@@ -69,9 +57,9 @@ Parse `FRAMEWORK` and `APP_NAME` from `$ARGUMENTS` (first and second whitespace-
 
    Then invoke `/speckit.constitution` with the following argument:
 
-   > Define a UI constitution for the `<FRAMEWORK>` framework. Focus on: component architecture, state management patterns, routing conventions, testing approach (unit, E2E), styling methodology, build/bundle configuration, and accessibility standards. Scope this to UI development concerns only. Add it as a section titled `## UI Constitution — <Framework>` in constitution.md.
+   > Define a UI constitution for the `<FRAMEWORK>` framework. Focus on: component architecture, state management patterns, routing conventions, testing approach (unit, E2E), styling methodology, build/bundle configuration, and accessibility standards. Scope this to UI development concerns only.
 
-   Wait for `/speckit.constitution` to complete before proceeding to Step 2.
+   Wait for `/speckit.constitution` to complete (it will create the file and register it in `constitution.md`) before proceeding to Step 2.
 
 ---
 
@@ -160,21 +148,21 @@ Print the following summary:
 - Location:     UI/              ← (Case A: single project, files at root)
                 UI/<APP_NAME>/   ← (Cases B/C: multi-project, named subfolder)
 
-- Constitution: Section "## UI Constitution — <Framework>" added to
-                .specify/memory/constitution.md
+- Constitution: Reference to "language-templates/<framework>.constitution.md"
+                registered in .specify/memory/constitution.md
 ```
 
 If constitution placeholders remain unfilled, append:
 
 ```
-  ⚠ WARNING: Unfilled placeholder tokens remain in the constitution section.
+  ⚠ WARNING: Unfilled placeholder tokens remain in the constitution file.
     Run /speckit.constitution to fill them in.
 ```
 
-If the constitution section was skipped (already existed), append:
+If the constitution reference was skipped (already existed), append:
 
 ```
-  ℹ Constitution section already existed — no changes made.
+  ℹ Constitution reference already registered — no changes made.
     Run /speckit.constitution to update it.
 ```
 
