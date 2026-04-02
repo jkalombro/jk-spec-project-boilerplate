@@ -5,7 +5,8 @@
       "Bash(mv sample-app/* sample-app/.??* .)",
       "Bash(rmdir sample-app:*)",
       "Bash(npm install:*)",
-      "Bash(npx ng:*)"
+      "Bash(npx ng:*)",
+      "Bash(xargs sed:*)"
     ]
   }
 }
