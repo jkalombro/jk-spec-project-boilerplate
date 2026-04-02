@@ -1,0 +1,188 @@
+---
+description: Scaffold a new UI application and wire its framework constitution into the project.
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+You **MUST** consider the user input before proceeding (if not empty).
+
+## Outline
+
+### Step 0 — Argument Validation
+
+Parse `FRAMEWORK` and `APP_NAME` from `$ARGUMENTS` (first and second whitespace-separated tokens).
+
+- Normalize `FRAMEWORK` to lowercase (e.g., `Angular` → `angular`, `Next.js` → `nextjs`, `NextJS` → `nextjs`).
+- If either argument is missing: output the following and **stop**:
+  ```
+  Usage: /create-ui-app <framework> <app-name>
+  Example: /create-ui-app angular my-dashboard
+  ```
+- If `APP_NAME` contains spaces: warn the user ("App names with spaces are non-standard and may cause issues with scaffold tools. Proceed anyway? (yes/no)") and wait for confirmation before continuing.
+
+---
+
+### Step 1 — Constitution Handling
+
+1. **Guard check**: Verify `.specify/memory/constitution.md` exists. If it does not → stop with:
+   ```
+   constitution.md not found. Run /speckit.constitution first to initialize your project constitution.
+   ```
+
+2. Compute the template path: `.specify/memory/language-templates/<FRAMEWORK>.constitution.md`
+
+3. Check if the template file exists.
+
+**Branch A — Template EXISTS:**
+
+   a. Read `.specify/memory/constitution.md` and scan for a line matching the pattern `## UI Constitution — ` (case-insensitive match on the framework name that follows). If a matching section is already present:
+      - Inform the user: "A `## UI Constitution — <Framework>` section already exists in `constitution.md`. Skipping append. Run `/speckit.constitution` to update it."
+      - Proceed to Step 2.
+
+   b. Read `.specify/memory/language-templates/<FRAMEWORK>.constitution.md`. Strip the first line if it begins with `# This contains` (it is a file-level comment that becomes noise inside `constitution.md`).
+
+   c. Append the following block to the end of `.specify/memory/constitution.md` (after a blank line):
+
+      ```markdown
+
+      ---
+
+      ## UI Constitution — <Framework>
+      <!-- Sourced from .specify/memory/language-templates/<framework>.constitution.md on <today's date YYYY-MM-DD> -->
+
+      <stripped template content verbatim>
+      ```
+
+      Where `<Framework>` is title-cased (e.g., `angular` → `Angular`, `react` → `React`).
+
+   d. After appending, scan the newly added content for any remaining tokens matching the pattern `[ALL_CAPS_IDENTIFIER]` (bracket-wrapped uppercase identifiers). If any are found, emit a prominent warning:
+
+      > **⚠ Warning:** The UI Constitution section for `<Framework>` still contains unfilled placeholder tokens (e.g., `[PRINCIPLE_1_NAME]`). Run `/speckit.constitution` to fill them in before planning features.
+
+**Branch B — Template DOES NOT EXIST:**
+
+   Inform the user: "No language template found at `.specify/memory/language-templates/<FRAMEWORK>.constitution.md`."
+
+   Then invoke `/speckit.constitution` with the following argument:
+
+   > Define a UI constitution for the `<FRAMEWORK>` framework. Focus on: component architecture, state management patterns, routing conventions, testing approach (unit, E2E), styling methodology, build/bundle configuration, and accessibility standards. Scope this to UI development concerns only. Add it as a section titled `## UI Constitution — <Framework>` in constitution.md.
+
+   Wait for `/speckit.constitution` to complete before proceeding to Step 2.
+
+---
+
+### Step 2 — Determine Project Location
+
+Check the `UI/` directory at the repo root.
+
+**Detection logic (evaluate in order):**
+
+1. Does `UI/` not exist, or exist but contain no files (including hidden files)? → **Case A** (fresh scaffold).
+
+2. Does `UI/` contain any of the following project-marker files directly at its root: `package.json`, `angular.json`, `vite.config.ts`, `vite.config.js`, `next.config.js`, `next.config.ts`, `next.config.mjs`, `svelte.config.js`, `svelte.config.ts`, `nuxt.config.ts`, `nuxt.config.js`, `webpack.config.js`, `tsconfig.json`, `.eslintrc*`? → **Case B** (existing single project at root).
+
+3. Does `UI/` contain subdirectories but no project-marker files at root? → **Case C** (multi-project mode).
+
+4. Does `UI/` contain both project-marker files at root AND subdirectories? → **Case B** (root-level project takes precedence).
+
+**Case A actions:** Note that `UI/` is empty or absent. The scaffold will create `UI/<APP_NAME>/`; you will flatten it to `UI/` afterward (Step 3).
+
+**Case B actions — find existing project name:**
+
+1. Attempt to read `UI/package.json` → extract the `name` field.
+2. If absent, read `UI/angular.json` → extract the first key under `projects`.
+3. If absent, look for a `*.csproj` file in `UI/` → use the filename without extension.
+4. If still undetermined → **ask the user**: "I found an existing project in `UI/` but could not determine its name. What should I name its subfolder when reorganizing?" Wait for response.
+
+Once `EXISTING_NAME` is known:
+1. Create `UI/<EXISTING_NAME>/`.
+2. Capture the list of all current top-level entries in `UI/` (excluding `<EXISTING_NAME>/` itself) using `ls -A UI/`.
+3. Move each captured entry into `UI/<EXISTING_NAME>/`.
+4. Verify the move succeeded by checking `UI/<EXISTING_NAME>/package.json` (or equivalent marker file) exists.
+
+**Guard — name conflict:** Before scaffolding, check if `UI/<APP_NAME>/` already exists (in Cases B/C) or if `UI/` already contains project files matching `<APP_NAME>` (Case A). If a conflict is detected → stop with:
+```
+Conflict: UI/<APP_NAME> already exists. Choose a different app name or remove the existing folder first.
+```
+
+---
+
+### Step 3 — Scaffold the Project
+
+Determine the scaffold command from `FRAMEWORK`:
+
+| Framework | Scaffold Command |
+|---|---|
+| `angular` | `ng new <APP_NAME>` |
+| `react` | `npm create vite@latest <APP_NAME> -- --template react-ts` |
+| `vue` | `npm create vite@latest <APP_NAME> -- --template vue` |
+| `nextjs`, `next`, `next.js` | `npx create-next-app@latest <APP_NAME>` |
+| `svelte` | `npm create vite@latest <APP_NAME> -- --template svelte` |
+| `nuxt` | `npx nuxi@latest init <APP_NAME>` |
+| anything else | Ask the user: "I don't have a built-in scaffold command for `<FRAMEWORK>`. Please provide the scaffold command to run from inside `UI/`, or type `skip` to create the folder manually." Wait for response. |
+
+**If user provides a custom command:** use it exactly as provided for the execution step below.
+
+**If user types `skip`:**
+- Create `UI/<APP_NAME>/` (or `UI/` in Case A) as an empty directory.
+- Note in the summary that scaffolding was skipped.
+- Jump to Step 4.
+
+**Execution:**
+
+Run the scaffold command from inside `UI/` (i.e., set working directory to `UI/`). This creates `UI/<APP_NAME>/` as output.
+
+- **Case A only (flatten):** After scaffolding succeeds, move the contents of `UI/<APP_NAME>/` up to `UI/` and remove the now-empty subfolder:
+  ```bash
+  cd UI && mv <APP_NAME>/* <APP_NAME>/.??* . 2>/dev/null; rmdir <APP_NAME>
+  ```
+  Verify by confirming a marker file (e.g., `package.json`, `angular.json`) now exists at `UI/` root.
+
+- **Cases B and C:** No post-scaffold move needed. The project is already in `UI/<APP_NAME>/`.
+
+**If the scaffold command fails** (e.g., CLI not found on PATH): report the error output verbatim, suggest installing the required CLI tool (e.g., `npm install -g @angular/cli`), and stop. Do not proceed to Step 4.
+
+---
+
+### Step 4 — Output Summary
+
+Print the following summary:
+
+```
+## Summary — create-ui-app complete
+
+- Framework:    <FRAMEWORK>
+- App name:     <APP_NAME>
+- Location:     UI/              ← (Case A: single project, files at root)
+                UI/<APP_NAME>/   ← (Cases B/C: multi-project, named subfolder)
+
+- Constitution: Section "## UI Constitution — <Framework>" added to
+                .specify/memory/constitution.md
+```
+
+If constitution placeholders remain unfilled, append:
+
+```
+  ⚠ WARNING: Unfilled placeholder tokens remain in the constitution section.
+    Run /speckit.constitution to fill them in.
+```
+
+If the constitution section was skipped (already existed), append:
+
+```
+  ℹ Constitution section already existed — no changes made.
+    Run /speckit.constitution to update it.
+```
+
+Then print:
+
+```
+## Next Steps
+
+1. Fill in any constitution placeholders: /speckit.constitution
+2. Define features for this app:        /speckit.specify "<feature description>"
+```
