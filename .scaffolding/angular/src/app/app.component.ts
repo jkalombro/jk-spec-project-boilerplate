@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AppState } from './store/models/app-state.model';
-import { User } from './store/models/user.model';
-import { Notification } from './store/models/notification.model';
 import { loadUser } from './store/actions/user.actions';
 import { selectUser } from './store/reducers/user.reducer';
 import { selectNotifications } from './store/reducers/app.reducer';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  title = '__APP_NAME__';
+  // Public variables
+  readonly title = '__APP_NAME__';
 
-  user$: Observable<User | null>;
-  notifications$: Observable<Notification[]>;
+  // Private variables
+  private readonly store = inject(Store<AppState>);
 
-  constructor(private store: Store<AppState>) {
-    this.user$ = this.store.select(selectUser);
-    this.notifications$ = this.store.select(selectNotifications);
-  }
+  // Public variables (signals)
+  readonly user = toSignal(this.store.select(selectUser));
+  readonly notifications = toSignal(this.store.select(selectNotifications), { initialValue: [] });
 
+  // Lifecycle methods
   ngOnInit(): void {
     this.store.dispatch(loadUser());
   }

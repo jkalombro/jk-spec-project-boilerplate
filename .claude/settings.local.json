@@ -6,7 +6,11 @@
       "Bash(rmdir sample-app:*)",
       "Bash(npm install:*)",
       "Bash(npx ng:*)",
-      "Bash(xargs sed:*)"
+      "Bash(xargs sed:*)",
+      "Bash(xargs grep:*)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['projects'][list\\(d['projects'].keys\\(\\)\\)[0]]['architect']['test'], indent=2\\)\\)\")",
+      "Bash(powershell -Command 'Get-ChildItem -Path . -Recurse -File | ForEach-Object { $content = Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue; if \\($content\\) { $updated = $content -replace '\\\\''__APP_NAME__'\\\\'', '\\\\''todo-app'\\\\'' -replace '\\\\''__APP_TITLE__'\\\\'', '\\\\''TodoApp'\\\\''; if \\($updated -ne $content\\) { Set-Content $_.FullName $updated -NoNewline; Write-Host \"Updated: $\\($_.FullName\\)\" } } }')",
+      "Bash(npm run:*)"
     ]
   }
 }

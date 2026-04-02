@@ -1,6 +1,8 @@
 <div class="tech-stack">
   <h2>Built With</h2>
   <div class="stack-badges">
-    <span class="badge" *ngFor="let tech of technologies">{{ tech }}</span>
+    @for (tech of technologies(); track tech) {
+      <span class="badge">{{ tech }}</span>
+    }
   </div>
 </div>

@@ -5,16 +5,21 @@
     subtitle="Your starting point for everything. Explore, build, and make it yours."
   ></app-hero-header>
 
-  <div class="hero__stats" *ngIf="loading$ | async">
-    <div class="stat-skeleton" *ngFor="let i of [1, 2, 3]"></div>
-  </div>
-
-  <div class="hero__cards" *ngIf="!(loading$ | async)">
-    <app-stat-card
-      *ngFor="let stat of stats$ | async"
-      [icon]="stat.icon"
-      [value]="stat.value"
-      [label]="stat.label"
-    ></app-stat-card>
-  </div>
+  @if (loading()) {
+    <div class="hero__stats" aria-busy="true" aria-label="Loading stats">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="stat-skeleton"></div>
+      }
+    </div>
+  } @else {
+    <div class="hero__cards">
+      @for (stat of stats(); track stat.label) {
+        <app-stat-card
+          [icon]="stat.icon"
+          [value]="stat.value"
+          [label]="stat.label"
+        ></app-stat-card>
+      }
+    </div>
+  }
 </section>

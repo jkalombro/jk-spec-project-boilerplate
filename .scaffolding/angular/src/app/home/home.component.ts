@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { StatCard } from './store/models/stat-card.model';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { loadStats } from './store/actions/home.actions';
 import { selectHomeLoading, selectHomeStats } from './store/reducers/home.reducer';
+import { HeroHeaderComponent } from './components/hero-header/hero-header.component';
+import { StatCardComponent } from './components/stat-card/stat-card.component';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [HeroHeaderComponent, StatCardComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  stats$: Observable<StatCard[]>;
-  loading$: Observable<boolean>;
+  // Private variables
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    this.stats$ = this.store.select(selectHomeStats);
-    this.loading$ = this.store.select(selectHomeLoading);
-  }
+  // Public variables (signals)
+  readonly stats = toSignal(this.store.select(selectHomeStats), { initialValue: [] });
+  readonly loading = toSignal(this.store.select(selectHomeLoading), { initialValue: false });
 
+  // Lifecycle methods
   ngOnInit(): void {
     this.store.dispatch(loadStats());
   }

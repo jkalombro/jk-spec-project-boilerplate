@@ -1,12 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-hero-header',
+  standalone: true,
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroHeaderComponent {
-  @Input() icon = '🏠';
-  @Input() title = '';
-  @Input() subtitle = '';
+  // Inputs
+  readonly icon = input('🏠');
+  readonly title = input('');
+  readonly subtitle = input('');
 }

@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-tech-stack',
+  standalone: true,
   templateUrl: './tech-stack.component.html',
   styleUrls: ['./tech-stack.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TechStackComponent {
-  @Input() technologies: string[] = [];
+  // Inputs
+  readonly technologies = input<string[]>([]);
 }
