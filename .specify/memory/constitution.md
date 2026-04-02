@@ -11,4 +11,4 @@ To create or update a constitution, run `/speckit.constitution` — it will read
 
 ## API
 
-<!-- Add references here as new constitutions are created -->
+- [C#/.NET](./language-templates/dotnet.constitution.md)

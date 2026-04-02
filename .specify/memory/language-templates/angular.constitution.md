@@ -68,7 +68,8 @@ When creating services, components, helpers, etc. Always create the test first b
 
 ### Should follow Global standards
 
-If rules are not defined here, always consider the global standards first when coding.
+- If rules are not defined here, always consider the global standards first when coding.
+- It should follow a self-documenting code mindset.
 
 ### Code Arrangements via Access Modifiers
 

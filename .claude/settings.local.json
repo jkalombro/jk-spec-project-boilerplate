@@ -10,7 +10,24 @@
       "Bash(xargs grep:*)",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['projects'][list\\(d['projects'].keys\\(\\)\\)[0]]['architect']['test'], indent=2\\)\\)\")",
       "Bash(powershell -Command 'Get-ChildItem -Path . -Recurse -File | ForEach-Object { $content = Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue; if \\($content\\) { $updated = $content -replace '\\\\''__APP_NAME__'\\\\'', '\\\\''todo-app'\\\\'' -replace '\\\\''__APP_TITLE__'\\\\'', '\\\\''TodoApp'\\\\''; if \\($updated -ne $content\\) { Set-Content $_.FullName $updated -NoNewline; Write-Host \"Updated: $\\($_.FullName\\)\" } } }')",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(dotnet new:*)",
+      "Bash(mv sample-api/* sample-api/.[!.]* .)",
+      "Bash(rmdir sample-api:*)",
+      "Bash(dotnet --version)",
+      "Bash(sqllocaldb info:*)",
+      "Bash(rm -f Program.cs sample-api.csproj sample-api.http appsettings.json appsettings.Development.json)",
+      "Bash(rm -rf Properties obj)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet tool:*)",
+      "Bash(dotnet ef:*)",
+      "Bash(dotnet nuget:*)",
+      "Bash(curl -s \"https://api.nuget.org/v3/registration5-gz-semver2/serilog.aspnetcore/index.json\")",
+      "Bash(python -c \"import sys,json; data=json.load\\(sys.stdin\\); pages=data['items']; last_page=pages[-1]; items=last_page['items'] if 'items' in last_page else []; print\\([i['catalogEntry']['version'] for i in items[-5:]]\\)\")"
     ]
   }
 }
