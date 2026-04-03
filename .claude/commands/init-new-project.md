@@ -42,23 +42,40 @@ Save the updated `.gitignore`.
 
 ---
 
-### Step 4 — Create GitHub Repository
+### Step 4 — Resolve `gh` CLI Path
+
+Before running any `gh` commands, resolve the CLI path with:
+
+```bash
+GH=$(which gh 2>/dev/null || echo "/c/Program Files/GitHub CLI/gh.exe")
+```
+
+Verify authentication:
+
+```bash
+"$GH" auth status 2>&1
+```
+
+- If not authenticated: stop with:
+  ```
+  GitHub CLI is not authenticated. Run `gh auth login` first.
+  ```
+
+---
+
+### Step 5 — Create GitHub Repository
 
 Run the following command to create a new **private** GitHub repository named `PROJECT_NAME` under the authenticated user's account:
 
 ```bash
-gh repo create <PROJECT_NAME> --private --source=. --remote=origin --push
+"$GH" repo create <PROJECT_NAME> --private --source=. --remote=origin --push
 ```
 
-- If `gh` is not authenticated: stop with:
-  ```
-  GitHub CLI is not authenticated. Run `gh auth login` first.
-  ```
 - If the repository already exists or the command fails: report the exact error output and stop.
 
 ---
 
-### Step 5 — Output Summary
+### Step 6 — Output Summary
 
 Print the following summary:
 
