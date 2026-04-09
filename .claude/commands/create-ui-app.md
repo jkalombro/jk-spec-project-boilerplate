@@ -59,7 +59,36 @@ Parse `FRAMEWORK` and `APP_NAME` from `$ARGUMENTS` (first and second whitespace-
 
    > Define a UI constitution for the `<FRAMEWORK>` framework. Focus on: component architecture, state management patterns, routing conventions, testing approach (unit, E2E), styling methodology, build/bundle configuration, and accessibility standards. Scope this to UI development concerns only.
 
-   Wait for `/speckit.constitution` to complete (it will create the file and register it in `constitution.md`) before proceeding to Step 2.
+   Wait for `/speckit.constitution` to complete (it will create the file and register it in `constitution.md`) before proceeding to Step 1b.
+
+---
+
+### Step 1b — Embed Constitution in `CLAUDE.md`
+
+After Branch A or B completes, inline the constitution into `CLAUDE.md` so its rules are always present in every future context window without requiring a manual read.
+
+1. Read the full content of `.specify/memory/language-templates/<FRAMEWORK>.constitution.md`.
+
+2. Read `CLAUDE.md` at the repo root. If it does not exist, create it with empty content.
+
+3. Check whether `CLAUDE.md` already contains the marker `<!-- constitution:<FRAMEWORK> -->`.
+
+   **If the marker EXISTS:** Replace everything between `<!-- constitution:<FRAMEWORK> -->` and `<!-- /constitution:<FRAMEWORK> -->` (inclusive) with the updated block below.
+
+   **If the marker DOES NOT EXIST:** Append the following block to the end of `CLAUDE.md`.
+
+   Block format:
+   ```
+   <!-- constitution:<FRAMEWORK> -->
+   ## <Framework> Constitution
+
+   <full content of the constitution file, verbatim>
+   <!-- /constitution:<FRAMEWORK> -->
+   ```
+
+4. Save `CLAUDE.md`.
+
+5. Inform the user: "Constitution for `<Framework>` has been embedded in `CLAUDE.md` and will be active in all future context windows."
 
 ---
 

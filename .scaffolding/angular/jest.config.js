@@ -1,7 +1,11 @@
 module.exports = {
   preset: 'jest-preset-angular',
-  setupFilesAfterFramework: ['<rootDir>/jest.setup.ts'],
-  testPathPattern: '.*\\.spec\\.ts$',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testRegex: '.*\\.spec\\.ts$',
+  transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$|ngxtension))'],
+  moduleNameMapper: {
+    '.*environments/environment$': '<rootDir>/src/__mocks__/environment.js',
+  },
   coverageThreshold: {
     global: {
       lines: 100,

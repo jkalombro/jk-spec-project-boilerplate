@@ -1,0 +1,39 @@
+@use 'assets/styles/variables' as *;
+
+@mixin respond-to($bp) {
+  @if map-has-key($breakpoints, $bp) {
+    @media (min-width: map-get($breakpoints, $bp)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$bp}. Available: #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
