@@ -1,0 +1,44 @@
+## .NET
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+TestResults/
+*.ncrunchproject
+*.ncrunchsolution
+*.ncrunchproject.user
+nCrunchTemp_*
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!packages/repositories.config
+*.lock.json
+!packages.lock.json
+project.lock.json
+
+## Secrets & config overrides
+appsettings.*.json
+!appsettings.Development.json
+*.pfx
+*.p12
+secrets.json
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+
+## VS Code
+.vscode/
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini

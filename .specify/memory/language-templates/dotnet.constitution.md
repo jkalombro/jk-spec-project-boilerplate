@@ -212,6 +212,17 @@ Order class members as follows — no exceptions:
 - If rules are not defined here, always consider the global standards first when coding.
 - It should follow a self-documenting code mindset.
 
+### Dealing with magic numbers/words/conditions
+
+Magic numbers, strings, and conditions are literal values embedded directly in code with no explanation of what they represent. They make code harder to read and maintain.
+
+Rules:
+
+- Every magic number or string must be extracted to a named constant at the top of the file or in a dedicated constants file
+- The constant name must describe what the value _means_, not what it _is_ (e.g., `MAX_RETRY_COUNT = 3`, not `THREE = 3`)
+- Boolean conditions with multiple clauses must be extracted to a clearly named variable or method (e.g., `const isFormReady = form.valid && !isSubmitting`)
+- Module-level constants use `SCREAMING_SNAKE_CASE`; local constants use `camelCase`
+
 ### SOLID Principles
 
 - **Single Responsibility** — one reason to change per class; handlers handle one use case
